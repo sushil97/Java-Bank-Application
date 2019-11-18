@@ -1,0 +1,10 @@
+create database OOPD;
+use OOPD;
+show tables;
+CREATE TABLE account_holders(account_number VARCHAR(30) primary key, fname VARCHAR(30), lname VARCHAR(30), dateOfJoining date, password VARCHAR(40),active_session boolean);
+DROP Table account_holders;
+Insert into account_holders values('abcd123','sushil','tiwari',DATE '2015-12-17',SHA1("123"),false);
+SELECT * FROM account_holders;
+Insert into account_holders values('abcd124','sushil','tiwari',DATE '2015-12-17',SHA1("123"),false);
+SELECT * FROM account_holders where account_number='abcd123' and password=sha1('123');
+SELECT sha1(password) FROM account_holders where account_number = 'abcd123';
