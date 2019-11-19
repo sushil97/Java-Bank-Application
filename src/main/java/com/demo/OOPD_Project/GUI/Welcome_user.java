@@ -14,19 +14,25 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import com.demo.OOPD_Project.Bean.AccountHolderBean;
+import com.demo.OOPD_Project.dao.AccountHolderDAO;
+import com.demo.OOPD_Project.exception.OOPDException;
 /*
  * This will be the first interface user will see after the login
  */
 public class Welcome_user {
 
 	private JFrame userScreen;
-	private static AccountHolderBean user;
+	private static AccountHolderBean userbean;
+	private static AccountHolderDAO service;
 	
 	public static void setUser(AccountHolderBean client)
 	{
-		user = client;
+		userbean = client;
 	}
-
+	public static void setService(AccountHolderDAO dao)
+	{
+		service = dao;
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -49,27 +55,56 @@ public class Welcome_user {
 
 	/**
 	 * Create the application.
+	 * @throws OOPDException 
 	 */
-	public Welcome_user() {
+	public Welcome_user() throws OOPDException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws OOPDException 
 	 */
-	private void initialize() {
+	private void initialize() throws OOPDException {
 		userScreen = new JFrame();
 		userScreen.setBounds(1500, 900, 1200, 900);
-		userScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		userScreen.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		userScreen.getContentPane().setLayout(null);
+		
+		/* IF user tries to cancel the screen driectly we will log them out */
+		userScreen.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        if (JOptionPane.showConfirmDialog(userScreen, 
+		            "Are you sure you want to close this window?\n You will be logged out", "Close Window?", 
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+		        	try {
+						service.ClientLogout(userbean);
+					} catch (OOPDException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		            System.exit(0);
+		        }
+		    }
+		});
+
 		
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Component frmLoginSystem = new JFrame("Exit");
 				if(JOptionPane.showConfirmDialog(frmLoginSystem, "Confirm if you want to Logout","Logout Alert",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION) {
-				Home_Screen.main(null);
-				userScreen.setVisible(false);
+					Home_Screen.main(null);
+					userScreen.setVisible(false);
+					try {
+						service.ClientLogout(userbean);
+					} catch (OOPDException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
 				}
 			}
 		});
@@ -83,6 +118,6 @@ public class Welcome_user {
 		JLabel NameLable = new JLabel("");
 		NameLable.setBounds(95, 12, 200, 15);
 		userScreen.getContentPane().add(NameLable);
-		NameLable.setText(user.getFname()+" "+user.getLname());
+		NameLable.setText(userbean.getFname()+" "+userbean.getLname());
 	}
 }

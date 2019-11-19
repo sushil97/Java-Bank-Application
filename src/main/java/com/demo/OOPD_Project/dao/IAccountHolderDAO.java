@@ -4,5 +4,6 @@ import com.demo.OOPD_Project.Bean.AccountHolderBean;
 import com.demo.OOPD_Project.exception.OOPDException;
 
 public interface IAccountHolderDAO {
-	public boolean ClientLogin(AccountHolderBean client) throws OOPDException;
+	public int ClientLogin(AccountHolderBean client) throws OOPDException;
+	public boolean ClientLogout(AccountHolderBean client) throws OOPDException;
 }

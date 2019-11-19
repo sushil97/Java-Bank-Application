@@ -115,10 +115,18 @@ public class Login_Screen_Client {
 				client.setAccountNumber(username);
 				client.setPassword(password);
 				try {
-				if(service.ClientLogin(client))
+				int status = service.ClientLogin(client);
+				if(status == 1)
+				{
+					JOptionPane.showMessageDialog(null, "User is already logged in","Login Error",JOptionPane.ERROR_MESSAGE);
+					account_number.setText(null);
+					passwordField.setText(null);
+				}
+				else if( status == 2 )
 				{
 					user_login.setVisible(false);
 					Welcome_user.setUser(client);
+					Welcome_user.setService(service);
 					Welcome_user.callUserWelcomeScreen();
 				}
 				else if((password.isBlank() || username.isBlank()))
@@ -130,6 +138,8 @@ public class Login_Screen_Client {
 					JOptionPane.showMessageDialog(null, "Invalid Login Details","Login Error",JOptionPane.ERROR_MESSAGE);
 					account_number.setText(null);
 					passwordField.setText(null);
+					client.setAccountNumber(null);
+					client.setPassword(null);
 				}
 				}
 				catch (Exception e) {

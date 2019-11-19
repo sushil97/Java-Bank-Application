@@ -5,10 +5,18 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Toolkit;
 
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+import com.demo.OOPD_Project.Bean.AdminBean;
+import com.demo.OOPD_Project.dao.AdminDAO;
+import com.demo.OOPD_Project.exception.OOPDException;
+
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -103,9 +111,55 @@ public class Admin_Login {
 		
 		btnAdminLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("came here");
-				//Admin's Login comes here
-				/* Also put the validation on the length of input*/
+				String username = Username.getText();
+				/* If account number input is too long */
+				if(username.length()>20)
+				{
+					JOptionPane.showMessageDialog(null, "Account number is too long","Invalid account number",JOptionPane.ERROR_MESSAGE);
+					Username.setText(null);
+					passwordField.setText(null);
+				}
+				String password = String.valueOf(passwordField.getPassword());
+				AdminBean admin = new AdminBean();
+				AdminDAO service = new AdminDAO();
+				admin.setUsername(username);
+				admin.setPassword(password);
+				try {
+				int status = service.adminLogin(admin);
+				if(status == 1)							//Admin is already logged in from separate window 
+				{
+					JOptionPane.showMessageDialog(null, "User is already logged in","Login Error",JOptionPane.ERROR_MESSAGE);
+					Username.setText(null);
+					passwordField.setText(null);
+				}
+				else if( status == 2 )
+				{
+					adminLogin.setVisible(false);
+					AdminWelcomeScreen.setAdmin(admin);
+					AdminWelcomeScreen.setService(service);
+					AdminWelcomeScreen.callAdminWelcomeScreen();
+				}
+				else if((password.isBlank() || username.isBlank()))
+				{
+					SwingUtilities.updateComponentTreeUI(adminLogin);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Invalid Login Details","Login Error",JOptionPane.ERROR_MESSAGE);
+					Username.setText(null);
+					passwordField.setText(null);
+					admin.setUsername(null);
+					admin.setPassword(null);
+				}
+				}
+				catch (Exception e) {
+					try {
+						throw new OOPDException("UI Error"+e);
+					} catch (OOPDException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 			}
 		});
 		btnAdminLogin.setFont(new Font("Dialog", Font.BOLD, 15));
