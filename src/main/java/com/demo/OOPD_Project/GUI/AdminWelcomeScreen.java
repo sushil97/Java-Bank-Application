@@ -113,20 +113,5 @@ public class AdminWelcomeScreen {
 		});
 		btnLogout.setBounds(573, 377, 114, 25);
 		AdminWelcome.getContentPane().add(btnLogout);
-		
-		JButton btnAddNewUser = new JButton("Add New User");
-		btnAddNewUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//Add new User
-				try {
-					service.addNewUser(admin);
-				} catch (OOPDException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-		btnAddNewUser.setBounds(400, 377, 130, 25);
-		AdminWelcome.getContentPane().add(btnAddNewUser);
 	}
 }

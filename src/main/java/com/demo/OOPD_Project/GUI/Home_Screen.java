@@ -54,7 +54,7 @@ public class Home_Screen {
 	 */
 	private void initialize() {
 		home_screen = new JFrame();
-		home_screen.setBounds(200, 200, 500, 300);
+		home_screen.setBounds(700, 700, 700, 300);
 		home_screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		home_screen.getContentPane().setLayout(null);
 		
@@ -65,7 +65,7 @@ public class Home_Screen {
 				home_screen.setVisible(false);
 			}
 		});
-		btnAdmin.setBounds(46, 125, 169, 31);
+		btnAdmin.setBounds(20, 125, 169, 31);
 		home_screen.getContentPane().add(btnAdmin);
 		
 		JButton btnAccountHolder = new JButton("Account Holder");
@@ -76,12 +76,12 @@ public class Home_Screen {
 				
 			}
 		});
-		btnAccountHolder.setBounds(265, 125, 169, 31);
+		btnAccountHolder.setBounds(250, 125, 180, 31);
 		home_screen.getContentPane().add(btnAccountHolder);
 		
 		JLabel lblLoginAs = new JLabel("LOGIN AS");
 		lblLoginAs.setFont(new Font("Dialog", Font.BOLD, 23));
-		lblLoginAs.setBounds(187, 39, 157, 25);
+		lblLoginAs.setBounds(260, 39, 157, 25);
 		home_screen.getContentPane().add(lblLoginAs);
 		
 		JButton btnNewButton = new JButton("Exit");
@@ -93,7 +93,17 @@ public class Home_Screen {
 				}
 			}
 		});
-		btnNewButton.setBounds(186, 188, 114, 35);
+		btnNewButton.setBounds(270, 190, 114, 35);
 		home_screen.getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Sign Up ");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SignUp.CallSignUp();
+				home_screen.setVisible(false);
+			}
+		});
+		btnNewButton_1.setBounds(500, 125, 169, 31);
+		home_screen.getContentPane().add(btnNewButton_1);
 	}
 }

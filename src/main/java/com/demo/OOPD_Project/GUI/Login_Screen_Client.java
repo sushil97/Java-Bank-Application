@@ -19,6 +19,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.demo.OOPD_Project.Bean.AccountBean;
 import com.demo.OOPD_Project.Bean.AccountHolderBean;
 import com.demo.OOPD_Project.dao.*;
 import com.demo.OOPD_Project.exception.OOPDException;
@@ -112,7 +113,9 @@ public class Login_Screen_Client {
 				String password = String.valueOf(passwordField.getPassword());
 				AccountHolderBean client = new AccountHolderBean();
 				AccountHolderDAO service = new AccountHolderDAO();
+				AccountBean account = new AccountBean();
 				client.setAccountNumber(username);
+				account.setAccountNo(username);
 				client.setPassword(password);
 				try {
 				int status = service.ClientLogin(client);

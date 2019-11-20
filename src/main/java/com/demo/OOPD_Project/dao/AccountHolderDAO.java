@@ -11,6 +11,8 @@ package com.demo.OOPD_Project.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import com.demo.OOPD_Project.Bean.AccountHolderBean;
 import com.demo.OOPD_Project.DBUtil.Database;
@@ -24,7 +26,7 @@ public class AccountHolderDAO implements IAccountHolderDAO{
 		int status = 0;												//Used to store status if login is or not
 		try {
 		con.setAutoCommit(false);
-	/* Running the SQL query to get information about the user with given username and password */
+	/* Running the SQL query to get information about the user with given user-name and password */
 		PreparedStatement ps = con.prepareStatement(IQuerryMapper.SELECT_USER);
 		ps.setString(1, client.getAccountNumber());
 		ps.setString(2, client.getPassword());
@@ -79,5 +81,44 @@ public class AccountHolderDAO implements IAccountHolderDAO{
 				throw new OOPDException("Error selection users "+e);
 			}
 			return true;
+		}
+
+		public boolean addClient(AccountHolderBean client) throws OOPDException {
+			
+			Connection con = Database.estabblishConnection();
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			LocalDate localDate = LocalDate.now();
+			System.out.println(dtf.format(localDate));
+			try {
+				con.setAutoCommit(false);
+				PreparedStatement ps = con.prepareStatement(IQuerryMapper.GET_CURR_ACC_NO);
+				ResultSet rs = ps.executeQuery();
+				rs.next();
+				int curr_acc_num = rs.getInt(1);
+				/*Increment account number back in the table*/
+				ps = con.prepareStatement(IQuerryMapper.INC_ACC_NUM);
+				ps.setInt(1, curr_acc_num+1);
+				ps.setInt(2, curr_acc_num);
+				ps.executeUpdate();
+				ps = con.prepareStatement(IQuerryMapper.ADD_USER);
+				ps.setString(1,"abcd"+(curr_acc_num+1));
+				client.setAccountNumber("abcd"+(curr_acc_num+1));
+				ps.setString(2, client.getFname());
+				ps.setString(3, client.getLname());
+				ps.setString(4, dtf.format(localDate));
+				ps.setString(5, client.getPassword());
+				System.out.println("New user created with following details: \n"+client.getAccountNumber()+ " "+client.getFname()+" "+client.getLname());
+				ps.executeUpdate();
+				ps = con.prepareStatement(IQuerryMapper.ADD_INTO_ACCOUNT);
+				ps.setString(1, client.getAccountNumber());
+				ps.executeUpdate();
+				con.commit();
+				con.close();
+			}
+			catch(Exception e)
+			{
+				throw new OOPDException("Error adding client"+e);
+			}
+			return false;
 		}
 }

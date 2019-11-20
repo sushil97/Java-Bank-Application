@@ -71,7 +71,7 @@ public class Welcome_user {
 		userScreen.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		userScreen.getContentPane().setLayout(null);
 		
-		/* IF user tries to cancel the screen driectly we will log them out */
+		/* If user tries to cancel the screen directly we will log them out */
 		userScreen.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
