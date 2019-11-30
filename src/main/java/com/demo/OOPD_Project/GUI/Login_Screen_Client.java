@@ -114,8 +114,8 @@ public class Login_Screen_Client {
 				AccountHolderBean client = new AccountHolderBean();
 				AccountHolderDAO service = new AccountHolderDAO();
 				AccountBean account = new AccountBean();
+				AccountDAO service_acc = new AccountDAO();
 				client.setAccountNumber(username);
-				account.setAccountNo(username);
 				client.setPassword(password);
 				try {
 				int status = service.ClientLogin(client);
@@ -127,9 +127,12 @@ public class Login_Screen_Client {
 				}
 				else if( status == 2 )
 				{
+					account.setCustomer(client);
+					service_acc.getBalanceFromDB(account);
 					user_login.setVisible(false);
 					Welcome_user.setUser(client);
 					Welcome_user.setService(service);
+					Welcome_user.setAccount(account);
 					Welcome_user.callUserWelcomeScreen();
 				}
 				else if((password.isBlank() || username.isBlank()))

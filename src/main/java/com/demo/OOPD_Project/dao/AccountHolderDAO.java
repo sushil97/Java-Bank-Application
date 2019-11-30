@@ -22,7 +22,7 @@ import com.demo.OOPD_Project.exception.OOPDException;
 public class AccountHolderDAO implements IAccountHolderDAO{
 	
 		public int ClientLogin(AccountHolderBean client) throws OOPDException {
-		Connection con=Database.estabblishConnection();						//Making connection to the database
+		Connection con=Database.estabblishConnection();				//Making connection to the database
 		int status = 0;												//Used to store status if login is or not
 		try {
 		con.setAutoCommit(false);
@@ -40,7 +40,6 @@ public class AccountHolderDAO implements IAccountHolderDAO{
 				status = 1;
 			else 
 			{
-			System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getString(5)+" "+rs.getString(6));
 			/*Since we got the information successful now set the respective variables with correct values*/
 			client.setFname(rs.getString(2));
 			client.setLname(rs.getString(3));
@@ -110,8 +109,11 @@ public class AccountHolderDAO implements IAccountHolderDAO{
 				System.out.println("New user created with following details: \n"+client.getAccountNumber()+ " "+client.getFname()+" "+client.getLname());
 				ps.executeUpdate();
 				ps = con.prepareStatement(IQuerryMapper.ADD_INTO_ACCOUNT);
-				ps.setString(1, client.getAccountNumber());
+				ps.setString(1,client.getAccountNumber());
 				ps.executeUpdate();
+				/*Making the monthly and daily interest tables*/
+				con.prepareStatement("CREATE TABLE "+client.getAccountNumber()+"_daily"+ "(day_mon NUMERIC primary key, Interest numeric(10,2))").executeUpdate();
+				con.prepareStatement("CREATE TABLE "+client.getAccountNumber()+"_monthly"+"(mon NUMERIC primary key,Total_interest numeric(10,2))").executeUpdate();
 				con.commit();
 				con.close();
 			}

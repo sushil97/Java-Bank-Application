@@ -9,10 +9,18 @@ public interface IQuerryMapper {
 	public static final String INC_ACC_NUM = "UPDATE current_account_number SET account_number = ? WHERE account_number = ?";
 	public static final String ADD_USER = "INSERT INTO account_holders VALUES(?,?,?,?,SHA1(?),false);";
 	public static final String ADD_INTO_ACCOUNT = "INSERT INTO accounts VALUES(?,0.0)";
-	
+
 	/*Admin Queries*/
 	public static final String ADMIN_LOGIN = "SELECT * FROM admin where username = ? and password = sha1(?)";
 	public static final String SET_ACTIVE_TRUE_ADMIN = "UPDATE admin SET active_status=true where username = ?";
 	public static final String LOGOUT_ADMIN = "UPDATE admin set active_status = false where username = ?";
 	
+	/*Account Queries*/
+	public static final String SET_BALANCE = "SELECT balance FROM accounts where account_number = ?";
+	
+	/*Withdraw*/
+	public static final String WITHDRAW_ACCOUNT = "UPDATE accounts SET balance = ? WHERE account_number = ?";
+	
+	/*DEPOSIT*/
+	public static final String DEPOSIT = "UPDATE accounts SET balance = ? WHERE account_number = ?";
 }

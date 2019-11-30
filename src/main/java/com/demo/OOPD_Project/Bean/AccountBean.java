@@ -1,15 +1,8 @@
 package com.demo.OOPD_Project.Bean;
 
 public class AccountBean {
-	private String accountNo;
 	private double balance;
 	private AccountHolderBean customer;
-	public String getAccountNo() {
-		return accountNo;
-	}
-	public void setAccountNo(String accountNo) {
-		this.accountNo = accountNo;
-	}
 	public double getBalance() {
 		return balance;
 	}
@@ -24,6 +17,6 @@ public class AccountBean {
 	}
 	@Override
 	public String toString() {
-		return "AccountBean [accountNo=" + accountNo + ", balance=" + balance + ", customer=" + customer + "]";
+		return "AccountBean [balance=" + balance + ", customer=" + customer + "]";
 	}	
 }

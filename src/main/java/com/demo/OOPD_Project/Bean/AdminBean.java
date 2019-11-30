@@ -3,7 +3,8 @@ package com.demo.OOPD_Project.Bean;
 public class AdminBean {
 	private String username;
 	private String password;
-	private double interest;
+	private double Interest;
+	private double tax;
 	public String getUsername() {
 		return username;
 	}
@@ -16,20 +17,25 @@ public class AdminBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public double getInterest() {
-		return interest;
-	}
-	public void setInterest(double interest) {
-		this.interest = interest;
-	}
 	@Override
 	public String toString() {
-		return "AdminBean [username=" + username + ", password=" + password + ", interest=" + interest + "]";
+		return "AdminBean [username=" + username + ", password=" + password + "]";
 	}
 	public AdminBean() {
 		this.username = null;
 		this.password = null;
-		this.interest = 0.0;
+	}
+	public double getInterest() {
+		return Interest;
+	}
+	public void setInterest(double d) {
+		Interest = d;
+	}
+	public double getTax() {
+		return tax;
+	}
+	public void setTax(double tax) {
+		this.tax = tax;
 	}
 	
 }

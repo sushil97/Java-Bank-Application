@@ -55,15 +55,17 @@ public class AdminWelcomeScreen {
 
 	/**
 	 * Create the application.
+	 * @throws OOPDException 
 	 */
-	public AdminWelcomeScreen() {
+	public AdminWelcomeScreen() throws OOPDException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws OOPDException 
 	 */
-	private void initialize() {
+	private void initialize() throws OOPDException {
 		AdminWelcome = new JFrame();
 		AdminWelcome.setBounds(1500, 900, 1200, 900);
 		AdminWelcome.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -79,6 +81,7 @@ public class AdminWelcomeScreen {
 		            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 		        	try {
 						service.adminLogout(admin);
+						System.exit(0);
 					} catch (OOPDException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -87,12 +90,6 @@ public class AdminWelcomeScreen {
 		        }
 		    }
 		});
-		
-		
-		JLabel lblWelcomeAdmin = new JLabel("Welcome Admin");
-		lblWelcomeAdmin.setFont(new Font("Dialog", Font.BOLD, 21));
-		lblWelcomeAdmin.setBounds(550, 20, 200, 25);
-		AdminWelcome.getContentPane().add(lblWelcomeAdmin);
 		
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
@@ -103,6 +100,7 @@ public class AdminWelcomeScreen {
 					AdminWelcome.setVisible(false);
 					try {
 						service.adminLogout(admin);
+						System.exit(0);
 					} catch (OOPDException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -111,7 +109,112 @@ public class AdminWelcomeScreen {
 				}
 			}
 		});
-		btnLogout.setBounds(573, 377, 114, 25);
+		btnLogout.setBounds(159, 248, 200, 25);
 		AdminWelcome.getContentPane().add(btnLogout);
+		
+		JButton btnSetInterest = new JButton("Set Interest");
+		btnSetInterest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setInterestGUI.adminBean(admin);
+				setInterestGUI.adminDao(service);
+				setInterestGUI.callSetInterest();
+				AdminWelcome.setVisible(false);
+			}
+		});
+		btnSetInterest.setBounds(159, 177, 200, 25);
+		AdminWelcome.getContentPane().add(btnSetInterest);
+		
+		JLabel lblCurrentInterest = new JLabel("Current Interest Rate Structure:");
+		lblCurrentInterest.setBounds(32, 71, 235, 15);
+		AdminWelcome.getContentPane().add(lblCurrentInterest);
+		
+		JLabel lblNewLabel = new JLabel(Double.toString(service.getInterestDB(admin)));
+		lblNewLabel.setBounds(270, 71, 66, 15);
+		AdminWelcome.getContentPane().add(lblNewLabel);
+		
+		JButton btnNewButton = new JButton("Set Tax");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setTaxGUI.adminBean(admin);
+				setTaxGUI.adminDao(service);
+				setTaxGUI.runSetTaxGui();
+				AdminWelcome.setVisible(false);
+			}
+		});
+		btnNewButton.setBounds(777, 177, 200, 25);
+		AdminWelcome.getContentPane().add(btnNewButton);
+		
+		JLabel lblCurrentTaxRate = new JLabel("Current Tax Rate Structure :");
+		lblCurrentTaxRate.setBounds(32, 93, 235, 15);
+		AdminWelcome.getContentPane().add(lblCurrentTaxRate);
+		
+		JLabel lblNewLabel_1 = new JLabel(Double.toString(service.getTaxDB(admin)));
+		lblNewLabel_1.setBounds(240, 93, 66, 15);
+		AdminWelcome.getContentPane().add(lblNewLabel_1);
+		
+		JLabel curr = new JLabel("Interest");
+		curr.setBounds(650, 38, 66, 15);
+		AdminWelcome.getContentPane().add(curr);
+		
+		JLabel label = new JLabel("*");
+		label.setBounds(730, 38, 66, 15);
+		AdminWelcome.getContentPane().add(label);
+		
+		JLabel lblBalance = new JLabel("Balance");
+		lblBalance.setBounds(750, 38, 66, 15);
+		AdminWelcome.getContentPane().add(lblBalance);
+		
+		JLabel label_1 = new JLabel("-----------");
+		label_1.setBounds(710, 52, 66, 15);
+		AdminWelcome.getContentPane().add(label_1);
+		
+		JLabel label_2 = new JLabel("100");
+		label_2.setBounds(720, 71, 66, 15);
+		AdminWelcome.getContentPane().add(label_2);
+		
+		JLabel lblNewLabel_2 = new JLabel("Sum Of (");
+		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 28));
+		lblNewLabel_2.setBounds(500, 50, 300, 35);
+		AdminWelcome.getContentPane().add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel(")");
+		lblNewLabel_3.setFont(new Font("Dialog", Font.BOLD, 28));
+		lblNewLabel_3.setBounds(810, 50, 66, 35);
+		AdminWelcome.getContentPane().add(lblNewLabel_3);
+		
+		JButton btnShowReport = new JButton("Show Report");
+		btnShowReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ShowReportGUI.callShowReport();
+				ShowReportGUI.setAdmin(admin);
+				ShowReportGUI.setService(service);
+				AdminWelcome.setVisible(false);
+			}
+		});
+		btnShowReport.setBounds(777, 248, 200, 25);
+		AdminWelcome.getContentPane().add(btnShowReport);
+		
+		JLabel label_3 = new JLabel("[");
+		label_3.setFont(new Font("Dialog", Font.BOLD, 28));
+		label_3.setBounds(825, 50, 20, 35);
+		AdminWelcome.getContentPane().add(label_3);
+		
+		JLabel label_4 = new JLabel("1");
+		label_4.setBounds(847, 52, 10, 15);
+		AdminWelcome.getContentPane().add(label_4);
+		
+		JLabel label_5 = new JLabel("-");
+		label_5.setFont(new Font("Dialog", Font.BOLD, 19));
+		label_5.setBounds(872, 50, 20, 15);
+		AdminWelcome.getContentPane().add(label_5);
+		
+		JLabel lblTax = new JLabel("tax/100");
+		lblTax.setBounds(888, 50, 66, 15);
+		AdminWelcome.getContentPane().add(lblTax);
+		
+		JLabel lblNewLabel_4 = new JLabel("]");
+		lblNewLabel_4.setFont(new Font("Dialog", Font.BOLD, 28));
+		lblNewLabel_4.setBounds(950, 50, 66, 35);
+		AdminWelcome.getContentPane().add(lblNewLabel_4);
 	}
 }

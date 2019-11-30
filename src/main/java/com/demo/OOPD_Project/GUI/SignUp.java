@@ -202,9 +202,30 @@ public class SignUp {
 		passwordField.setBounds(280, 240, 300, 30);
 		SignUpFrame.getContentPane().add(passwordField);
 		
+		/* Disabling all the invalid inputs like special characters into the First Name field*/
+		passwordField.addKeyListener(new KeyAdapter() {
+	        public void keyTyped(KeyEvent e) {
+	        	char c = e.getKeyChar();
+	            if (c==32 || c==127 || c==9) { 
+	                e.consume(); 
+	            }
+	        }
+	    });
+		
+		
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setBounds(280, 310, 300, 30);
 		SignUpFrame.getContentPane().add(passwordField_1);
+		
+		/* Disabling all the invalid inputs like special characters into the First Name field*/
+		passwordField_1.addKeyListener(new KeyAdapter() {
+	        public void keyTyped(KeyEvent e) {
+	        	char c = e.getKeyChar();
+	            if (c==32 || c==127 || c==9) { 
+	                e.consume(); 
+	            }
+	        }
+	    });
 		
 		hidelbl1 = new JLabel("Thankyou For registring!");
 		hidelbl1.setFont(new Font("Dialog", Font.BOLD, 16));

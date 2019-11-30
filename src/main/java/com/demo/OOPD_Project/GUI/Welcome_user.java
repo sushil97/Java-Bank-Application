@@ -13,7 +13,9 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import com.demo.OOPD_Project.Bean.AccountBean;
 import com.demo.OOPD_Project.Bean.AccountHolderBean;
+import com.demo.OOPD_Project.dao.AccountDAO;
 import com.demo.OOPD_Project.dao.AccountHolderDAO;
 import com.demo.OOPD_Project.exception.OOPDException;
 /*
@@ -24,6 +26,8 @@ public class Welcome_user {
 	private JFrame userScreen;
 	private static AccountHolderBean userbean;
 	private static AccountHolderDAO service;
+	private static AccountBean account;
+	private static AccountDAO account_service;
 	
 	public static void setUser(AccountHolderBean client)
 	{
@@ -32,6 +36,14 @@ public class Welcome_user {
 	public static void setService(AccountHolderDAO dao)
 	{
 		service = dao;
+	}
+	public static void setAccount(AccountBean a)
+	{
+		account = a;
+	}
+	public static void setAccountService(AccountDAO b)
+	{
+		account_service = b;
 	}
 	/**
 	 * Launch the application.
@@ -108,7 +120,7 @@ public class Welcome_user {
 				}
 			}
 		});
-		btnLogout.setBounds(159, 161, 114, 25);
+		btnLogout.setBounds(430, 200, 114, 25);
 		userScreen.getContentPane().add(btnLogout);
 		
 		JLabel lblWelcome = new JLabel("Welcome");
@@ -119,5 +131,49 @@ public class Welcome_user {
 		NameLable.setBounds(95, 12, 200, 15);
 		userScreen.getContentPane().add(NameLable);
 		NameLable.setText(userbean.getFname()+" "+userbean.getLname());
+		
+		JLabel lblAccountNumber = new JLabel("Account number :");
+		lblAccountNumber.setBounds(30, 32, 142, 15);
+		userScreen.getContentPane().add(lblAccountNumber);
+		
+		JLabel lblNewLabel = new JLabel(userbean.getAccountNumber());
+		lblNewLabel.setBounds(160, 32, 150, 15);
+		userScreen.getContentPane().add(lblNewLabel);
+		
+		JLabel lblCurrentBalance = new JLabel("Current Balance :");
+		lblCurrentBalance.setBounds(30, 50, 130, 15);
+		userScreen.getContentPane().add(lblCurrentBalance);
+		
+		JLabel lblNewLabel_1 = new JLabel(Double.toString(account.getBalance()));
+		lblNewLabel_1.setBounds(160, 52, 66, 15);
+		userScreen.getContentPane().add(lblNewLabel_1);
+		
+		JButton btnNewButton = new JButton("Withdraw");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				WithdrawForm.callWithdrawFrame();
+				WithdrawForm.setUser(userbean);
+				WithdrawForm.setService(service);
+				WithdrawForm.setAccountService(account_service);
+				WithdrawForm.setAccountbean(account);
+				userScreen.setVisible(false);
+			}
+		});
+		btnNewButton.setBounds(250, 161, 114, 25);
+		userScreen.getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Deposit");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Deposit.CallDeposit();
+				Deposit.setAccountbean(account);
+				Deposit.setAccountService(account_service);
+				Deposit.setService(service);
+				Deposit.setUser(userbean);
+				userScreen.setVisible(false);
+			}
+		});
+		btnNewButton_1.setBounds(600, 161, 114, 25);
+		userScreen.getContentPane().add(btnNewButton_1);
 	}
 }
