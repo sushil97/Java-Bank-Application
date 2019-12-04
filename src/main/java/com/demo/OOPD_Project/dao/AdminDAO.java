@@ -46,7 +46,7 @@ public class AdminDAO implements IAdminDAO{
 			  
 		      Calendar calendar = Calendar.getInstance();
 		      calendar.set(Calendar.HOUR_OF_DAY, 23);
-		      calendar.set(Calendar.MINUTE, 59);
+		      calendar.set(Calendar.MINUTE, 58);
 		      calendar.set(Calendar.SECOND, 00);
 		      Date time = calendar.getTime();
 		  
