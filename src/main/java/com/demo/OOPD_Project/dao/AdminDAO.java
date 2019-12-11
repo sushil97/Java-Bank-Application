@@ -119,6 +119,8 @@ public class AdminDAO implements IAdminDAO{
     	    	  double temp=0;
 	    		  if(currentDay==31 &&(currentMonth==1||currentMonth==3||currentMonth==5||currentMonth==7||currentMonth==8||currentMonth==10||currentMonth==12))
 	    		  {
+	    			  ps = con.prepareStatement("DELETE FROM "+rs.getString(1)+"_daily");
+	    			  ps.executeUpdate();
 	    			  ps = con.prepareStatement("SELECT Interest FROM "+rs.getString(1)+"_daily");
 	    	    	  ResultSet rg = ps.executeQuery();
 	    	    	  while(rg.next()) {
@@ -141,6 +143,9 @@ public class AdminDAO implements IAdminDAO{
 	    		  }
 	    		  else if(currentDay==30&&(currentMonth==4||currentMonth==6||currentMonth==9||currentMonth==11))
 	    		  {
+
+	    			  ps = con.prepareStatement("DELETE FROM "+rs.getString(1)+"_daily");
+	    			  ps.executeUpdate();
 	    			  ps = con.prepareStatement("SELECT Interest FROM "+rs.getString(1)+"_daily");
 	    	    	  ResultSet rx = ps.executeQuery();
 	    	    	  while(rx.next()) {
@@ -163,6 +168,9 @@ public class AdminDAO implements IAdminDAO{
 	    		  }
 	    		  else if((currentDay==28 || currentDay == 29)&&(currentMonth==2))
 	    		  {
+
+	    			  ps = con.prepareStatement("DELETE FROM "+rs.getString(1)+"_daily");
+	    			  ps.executeUpdate();
 	    			  ps = con.prepareStatement("SELECT Interest FROM "+rs.getString(1)+"_daily");
 	    	    	  ResultSet ry = ps.executeQuery();
 	    	    	  while(ry.next()) {
